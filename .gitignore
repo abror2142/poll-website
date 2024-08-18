@@ -1,0 +1,12 @@
+# DB
+*.sqlite3
+
+# Libraries
+node_modules/
+.venv/
+
+# Secret
+*.env
+
+# Python
+__pycache__/
