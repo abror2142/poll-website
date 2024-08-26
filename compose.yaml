@@ -1,0 +1,46 @@
+services:
+  db:
+    image: postgres
+    container_name: db
+    restart: always
+    ports:
+      - '5435:5432'
+    volumes:
+      - data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - PGUSER=${POSTGRES_USER}
+    healthcheck:
+      test: ["CMD", "pg_isready"]
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+
+  backend:
+    build: ./backend
+    container_name: web-backend
+    restart: always
+    ports:
+      - '8000:8000'
+    env_file:
+      - .env
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+  
+  frontend:
+    build: ./frontend  
+    container_name: web-frontend
+    restart: always
+    ports:
+      - '3000:3000'
+    command: npm start
+    depends_on:
+      - 'backend'
+
+volumes:
+  data:
