@@ -7,24 +7,24 @@ function Navbar(){
         <nav className="navbar">
             <div className="nav-left">
                 <ul>
-                    <li><Link to="/">Home</Link></li>
-                    <li ><Link to="#" className="no-wrap">Poll Maker</Link></li>
-                    <li><Link to="#">Docs</Link></li>
-                    <li><Link to="#">Tips</Link></li>
-                    <li><Link to="#">About</Link></li>
-                    <li><Link to="#">Contact</Link></li>
+                    <li><Link to="/" className="hover">Home</Link></li>
+                    <li><Link to="#" className="no-wrap hover">Poll Maker</Link></li>
+                    <li><Link to="#" className="hover">Docs</Link></li>
+                    <li><Link to="#" className="hover">Tips</Link></li>
+                    <li><Link to="#" className="hover">About</Link></li>
+                    <li><Link to="#" className="hover">Contact</Link></li>
                 </ul>
             </div>
 
             <div className="nav-middle">
                 <Link to="/">
                     <ul className="brand-name">
-                        <li>P</li>
-                        <li>O</li>
-                        <li>L</li>
-                        <li>L</li>                        
-                        <li>E</li>
-                        <li>R</li>
+                        <li className="hover">P</li>
+                        <li className="hover">O</li>
+                        <li className="hover">L</li>
+                        <li className="hover">L</li>                        
+                        <li className="hover">E</li>      
+                        <li className="hover">R</li>
                         <li className="brand-last">B</li>
                     </ul>
                 </Link>

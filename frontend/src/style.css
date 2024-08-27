@@ -66,8 +66,16 @@ a {
 .nav-left > ul {
     list-style-type: none;
     display: flex; 
-    gap: 1rem;
-    
+    gap: 0.3rem;
+}
+
+.nav-left > ul > li > a{
+    padding: 0.3rem 0.5rem;
+}
+
+.hover:hover {
+    background-color: yellow;
+    color: #0a122a;                                                                                                                                                                                                                             
 }
 
 .register-btn {
@@ -82,6 +90,16 @@ a {
     border: 2px solid #fbfaf8;
     padding: 3px 7px;
     border-radius: 5px;
+}
+
+.login-btn:hover {
+    border-color: yellow;
+}
+
+.register-btn:hover {
+    border-color: #fbfaf8;
+    
+    background-color: rgb(252, 252, 164);
 }
 
 .brand-name {
