@@ -32,7 +32,7 @@ function Navbar(){
 
             <div className="nav-right">
                 <Link to="/signup" className="register-btn">Register</Link>
-                <Link to="#" className="login-btn">Login</Link>
+                <Link to="/login" className="login-btn">Login</Link>
             </div>
         </nav>
     )

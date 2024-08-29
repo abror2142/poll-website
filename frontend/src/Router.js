@@ -4,6 +4,7 @@ import { createBrowserRouter, createRoutesFromElements, Route } from "react-rout
 import Home, {loader as HomeLoader} from "./containers/Home";
 import Layout from "./hocs/Layout";
 import Signup from "./containers/Auth/Signup";
+import Login from "./containers/Auth/Login";
 
 const routes = createRoutesFromElements(
     <Route path="/" element={<Layout />}> 
@@ -15,6 +16,10 @@ const routes = createRoutesFromElements(
         <Route 
             path="signup"
             element={<Signup />}
+        />
+        <Route 
+            path="login"
+            element={<Login />}
         />
     </Route>
 )

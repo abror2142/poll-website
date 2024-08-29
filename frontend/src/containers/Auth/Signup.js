@@ -7,6 +7,7 @@ import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 
 import validateForm from "../../utils/validateForm";
 
+
 function Signup() {
 
     const [username, setUsername] = useState('')
@@ -245,7 +246,7 @@ function Signup() {
             </form>
 
             <div className="signup-footer">
-                <p>Already have an Account? <Link to='#'>Login</Link> here.</p>
+                <p>Already have an Account? <Link to='/login'>Login</Link> here.</p>
             </div>
         </div>
     )
