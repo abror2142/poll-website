@@ -31,7 +31,7 @@ function Navbar(){
             </div>
 
             <div className="nav-right">
-                <Link to="#" className="register-btn">Register</Link>
+                <Link to="/signup" className="register-btn">Register</Link>
                 <Link to="#" className="login-btn">Login</Link>
             </div>
         </nav>

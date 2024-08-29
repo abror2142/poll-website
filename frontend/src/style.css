@@ -9,7 +9,6 @@ img {
 }
 
 a {
-    color: #fbfaf8;
     text-decoration: none;
 }
 
@@ -61,8 +60,6 @@ a {
     gap: 1rem; 
 }
 
-
-
 .nav-left > ul {
     list-style-type: none;
     display: flex; 
@@ -71,6 +68,7 @@ a {
 
 .nav-left > ul > li > a{
     padding: 0.3rem 0.5rem;
+    color: #fbfaf8;
 }
 
 .hover:hover {

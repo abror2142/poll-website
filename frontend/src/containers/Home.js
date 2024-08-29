@@ -16,10 +16,9 @@ export async function loader(){
 }
 
 function Home(){
-    const data = useLoaderData().data
+    const data = useLoaderData()
     return (
         <div>
-            <h2>{data}</h2>
         </div>
     )
 }
