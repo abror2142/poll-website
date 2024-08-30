@@ -5,6 +5,10 @@ import Home, {loader as HomeLoader} from "./containers/Home";
 import Layout from "./hocs/Layout";
 import Signup from "./containers/Auth/Signup";
 import Login from "./containers/Auth/Login";
+import Activation from "./containers/Auth/Activation";
+import PasswordReset from "./containers/Auth/PasswordReset";
+import PasswordResetConfirm from "./containers/Auth/PasswordResetConfirm";
+
 
 const routes = createRoutesFromElements(
     <Route path="/" element={<Layout />}> 
@@ -20,6 +24,18 @@ const routes = createRoutesFromElements(
         <Route 
             path="login"
             element={<Login />}
+        />
+        <Route 
+            path="activation"
+            element={<Activation />}
+        />
+        <Route 
+            path="password-reset"
+            element={<PasswordReset />}
+        />
+        <Route 
+            path="password-reset-confirm"
+            element={<PasswordResetConfirm />}
         />
     </Route>
 )

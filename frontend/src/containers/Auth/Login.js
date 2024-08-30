@@ -145,7 +145,7 @@ function Login() {
 
             <div className="login-footer">
                 <p>Don't have an Account? <Link to='/signup'>Sign Up</Link> here.</p>
-                <p>Forget your Password? <Link to='#'>Reset</Link> here.</p>
+                <p>Forget your Password? <Link to='/password-reset'>Reset</Link> here.</p>
             </div>
         </div>
     )
