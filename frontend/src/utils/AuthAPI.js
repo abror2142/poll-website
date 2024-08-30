@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:8000/account/'
+const BASE_URL = 'http://localhost:8000/accounts/'
 
 export const URLs = {
 

@@ -1,7 +1,7 @@
 import { isEmail } from "validator";
 
 export const USERNAME_REGEX = /^[a-zA-Z0-9]+$/
-export const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]){8, 24}$/
+export const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,24}$/
 
 function validateForm(username, email, password, rePassword) {
     
@@ -42,8 +42,8 @@ function validateForm(username, email, password, rePassword) {
     }
 
     if(rePassword) {
-        if(rePassword.length != password)
-            errors.rePassword.push('Confirm Password must be at least 4 characters.')
+        if(rePassword != password)
+            errors.rePassword.push('Passwords must match!')
     } else {
         errors.rePassword.push('Confirm Password is required.')
     }

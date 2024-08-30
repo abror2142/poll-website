@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 
 import validateForm from "../../utils/validateForm";
-
+import { signup } from "../../utils/AuthAPI";
 
 function Signup() {
 
@@ -31,6 +31,8 @@ function Signup() {
     const [firstTouchRePassword, setFirstTouchRePassword] = useState(false)
 
     const [errors, setErrors] = useState({})
+    const [submitting, setSubmitting] = useState(false)
+
 
     useEffect(()=> {
         setErrors(validateForm(username, email, password, rePassword))
@@ -39,8 +41,21 @@ function Signup() {
 
     async function handleSubmit(e) {
         e.preventDefault()
-    }
 
+        setSubmitting(true)
+
+        const data = {
+            "username": username,
+            "email": email,
+            "password": password,
+            "re_password": rePassword
+        }
+        const response = await signup(data)
+        console.log(response)
+        setSubmitting(false)
+    }
+    
+    console.log(errors)
     return (
         <div className="signup-page">
             <div className="signup-header">
@@ -72,7 +87,7 @@ function Signup() {
                         {
                             touchedUsername
                             && !focusUsername
-                            && errors.username
+                            && (errors.username.length > 0)
                             && <FontAwesomeIcon icon={faCircleExclamation}/>
                         }
                     </div>
@@ -81,7 +96,7 @@ function Signup() {
                         touchedUsername
                         && focusUsername
                         && firstTouchUsername  
-                        && errors.username
+                        && (errors.username.length > 0)
                         && <div className="error-box">
                             <ul>
                                 {
@@ -120,7 +135,7 @@ function Signup() {
                         {
                             touchedEmail
                             && !focusEmail
-                            && errors.email
+                            && (errors.email.length > 0)
                             && <FontAwesomeIcon icon={faCircleExclamation}/>
                         }
                     </div>
@@ -129,7 +144,7 @@ function Signup() {
                         touchedEmail
                         && focusEmail
                         && firstTouchEmail  
-                        && errors.email
+                        && (errors.email.length > 0)
                         && <div className="error-box">
                             <ul>
                                 {
@@ -168,7 +183,7 @@ function Signup() {
                         {
                             touchedPassword
                             && !focusPassword
-                            && errors.password
+                            && (errors.password.length > 0)
                             && <FontAwesomeIcon icon={faCircleExclamation}/>
                         }
                     </div>
@@ -177,7 +192,7 @@ function Signup() {
                         touchedPassword
                         && focusPassword
                         && firstTouchPassword  
-                        && errors.password
+                        && (errors.password.length > 0)
                         && <div className="error-box">
                             <ul>
                                 {
@@ -216,7 +231,7 @@ function Signup() {
                         {
                             touchedRePassword
                             && !focusRePassword
-                            && errors.rePassword
+                            && (errors.rePassword.length > 0)
                             && <FontAwesomeIcon icon={faCircleExclamation}/>
                         }
                     </div>
@@ -225,7 +240,7 @@ function Signup() {
                         touchedRePassword
                         && focusRePassword
                         && firstTouchRePassword  
-                        && errors.rePassword
+                        && (errors.rePassword.length > 0)
                         && <div className="error-box">
                             <ul>
                                 {
@@ -241,7 +256,9 @@ function Signup() {
 
                 </div>
 
-                <button>Submit</button>
+                <button
+                    disabled={submitting}
+                >Submit</button>
 
             </form>
 
