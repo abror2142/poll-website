@@ -8,6 +8,7 @@ import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 import validateForm from "../../utils/validateForm";
 import { signup } from "../../utils/AuthAPI";
 
+
 function Signup() {
 
     const [username, setUsername] = useState('')
@@ -256,9 +257,7 @@ function Signup() {
 
                 </div>
 
-                <button
-                    disabled={submitting}
-                >Submit</button>
+                <button disabled={submitting}>Submit{submitting && '...'}</button>
 
             </form>
 

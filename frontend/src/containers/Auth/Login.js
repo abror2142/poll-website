@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 
 import validateForm from "../../utils/validateForm";
-
+import { createJWT } from "../../utils/AuthAPI";
 
 function Login() {
 
@@ -22,6 +22,7 @@ function Login() {
 
     const [errors, setErrors] = useState({})
     const [showErrors, setShowErrors] = useState(false)
+    const [submitting, setSubmitting] = useState(false)
 
     useEffect(()=> {
         setErrors(validateForm(username, null, password, null))
@@ -31,6 +32,17 @@ function Login() {
     async function handleSubmit(e) {
         e.preventDefault()
         setShowErrors(true)
+        setSubmitting(true)
+
+        const data = {
+            "username": username,
+            "password": password
+        }
+
+        const response = await createJWT(data)
+        console.log(response)
+
+        setSubmitting(false)
     }
 
     return (
@@ -139,7 +151,7 @@ function Login() {
 
                 </div>
 
-                <button>Login</button>
+                <button disabled={submitting}>Login{submitting && '...'}</button>
 
             </form>
 

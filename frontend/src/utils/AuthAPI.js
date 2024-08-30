@@ -109,7 +109,7 @@ export async function resetPasswordConfirm(data) {
     return await request('POST', URLs.RESET_PASSWORD_CONFIRM, data)
 }
 
-export async function getJWT(data) {
+export async function createJWT(data) {
     return await request('POST', URLs.JWT_CREATE, data)
 }
 
