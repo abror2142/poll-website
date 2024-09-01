@@ -2,10 +2,10 @@ import React from "react";
 import { useState, useEffect } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
+import { faCircleExclamation, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 import validateForm from "../../utils/validateForm";
-
+import { resetPassword } from "../../utils/AuthAPI";
 
 function PasswordReset() {
 
@@ -15,6 +15,7 @@ function PasswordReset() {
     const [firstTouchEmail, setFirstTouchEmail] = useState(false)
 
     const [errors, setErrors] = useState({})
+    const [submitting, setSubmitting] = useState(false)
 
     useEffect(()=> {
         setErrors(validateForm(null, email))
@@ -23,24 +24,35 @@ function PasswordReset() {
 
     async function handleSubmit(e) {
         e.preventDefault()
+        if(!errors.email){
+            setSubmitting(true)
+            
+            const data = {
+                "email": email
+            }
+
+            const response = await resetPassword(data)
+            console.log(response)
+            setSubmitting(false)
+        }
     }
 
     return (
-        <div className="password-reset-page page-middle">
+        <div className="auth-page">
 
-            <div className="password-reset-header">
+            <div className="auth-page-header">
                 <h2>Password Reset</h2>
             </div>
 
-            <form onSubmit={handleSubmit} className="form password-reset-form"> 
+            <form onSubmit={handleSubmit} className="form auth-page-form"> 
 
-                <div className="email-input">
+                <div className="input-box">
 
-                    <div className="form-label">
+                    <div className="input-label">
                         <label htmlFor="email">Enter your email: </label>
                     </div>
 
-                    <div className="email-field">
+                    <div className="input-field">
                         <input 
                             id="email"
                             onChange={(e) => setEmail(e.target.value)}
@@ -57,8 +69,8 @@ function PasswordReset() {
                         {
                             touchedEmail
                             && !focusEmail
-                            && errors.email
-                            && <FontAwesomeIcon icon={faCircleExclamation}/>
+                            && (errors.email.length > 0)
+                            && <FontAwesomeIcon className="error-icon" icon={faCircleExclamation} />
                         }
                     </div>
 
@@ -66,23 +78,29 @@ function PasswordReset() {
                         touchedEmail
                         && focusEmail
                         && firstTouchEmail  
-                        && errors.email
+                        && (errors.email.length > 0)
                         && <div className="error-box">
-                            <ul>
-                                {
-                                    errors.email.map((error, index) => {
-                                        return (
-                                            <li key={'email-error-' + index}>{error}</li>
-                                        )
-                                    })
-                                }
-                            </ul>
-                        </div>
+                        <ul>
+                            {
+                                errors.email.map((error, index) => {
+                                    return (
+                                        <li key={'email-error-' + index}>
+                                            <div className="error-list-item">
+                                                <FontAwesomeIcon className="error-x-icon" icon={faXmark} />
+                                                <p>{error}</p>
+                                            </div>
+                                        </li>
+                                    )
+                                })
+                            }
+                        </ul>
+                    </div>
                      }  
 
                 </div>
-
-                <button>Submit</button>
+                <div className="form-button">
+                    <button disabled={submitting}>Send{submitting && 'ing Link...'}</button>
+                </div>
 
             </form>
 
