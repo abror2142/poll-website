@@ -46,7 +46,7 @@ function Login() {
     }
 
     return (
-        <div className="login-page">
+        <div className="login-page page-middle">
             <div className="login-header">
                 <h2>Login</h2>
             </div>

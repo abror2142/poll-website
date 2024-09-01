@@ -26,10 +26,10 @@ function PasswordReset() {
     }
 
     return (
-        <div className="password-reset-page">
+        <div className="password-reset-page page-middle">
 
             <div className="password-reset-header">
-                <h2>SPassword Reset</h2>
+                <h2>Password Reset</h2>
             </div>
 
             <form onSubmit={handleSubmit} className="form password-reset-form"> 

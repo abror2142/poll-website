@@ -15,6 +15,7 @@ export async function loader(){
     return resp
 }
 
+
 function Home(){
     const data = useLoaderData()
     return (

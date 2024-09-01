@@ -42,7 +42,7 @@ function PasswordResetConfirm() {
     }
 
     return (
-        <div className="pass-res-confirm-page">
+        <div className="pass-res-confirm-page page-middle">
             <div className="pass-res-confirm-header">
                 <h2>Set New Password</h2>
             </div>

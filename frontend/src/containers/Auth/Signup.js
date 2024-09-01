@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
+import { faCircleExclamation, faPenToSquare, faRightToBracket, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 import validateForm from "../../utils/validateForm";
 import { signup } from "../../utils/AuthAPI";
@@ -56,22 +56,25 @@ function Signup() {
         setSubmitting(false)
     }
     
-    console.log(errors)
     return (
-        <div className="signup-page">
-            <div className="signup-header">
-                <h2>Sign Up</h2>
+        <div className="auth-page">
+            
+            <div className="auth-page-header">
+                <div >
+                    <FontAwesomeIcon className="header-icon" icon={faPenToSquare} />
+                </div>
+                <h2>Signup</h2>
             </div>
 
-            <form onSubmit={handleSubmit} className="form signup-form"> 
+            <form onSubmit={handleSubmit} className="form auth-page-form"> 
 
-                <div className="username-input">
+                <div className="input-box">
 
-                    <div className="form-label">
+                    <div className="input-label">
                         <label htmlFor="username">Username: </label>
                     </div>
 
-                    <div className="username-field">
+                    <div className="input-field">
                         <input 
                             id="username"
                             onChange={(e) => setUsername(e.target.value)}
@@ -89,7 +92,7 @@ function Signup() {
                             touchedUsername
                             && !focusUsername
                             && (errors.username.length > 0)
-                            && <FontAwesomeIcon icon={faCircleExclamation}/>
+                            && <FontAwesomeIcon className="error-icon" icon={faCircleExclamation}/>
                         }
                     </div>
 
@@ -103,7 +106,12 @@ function Signup() {
                                 {
                                     errors.username.map((error, index) => {
                                         return (
-                                            <li key={'error' + index}>{error}</li>
+                                            <li key={'username-error-' + index}>
+                                                <div className="error-list-item">
+                                                    <FontAwesomeIcon className="error-x-icon" icon={faXmark} />
+                                                    <p>{error}</p>
+                                                </div>
+                                            </li>
                                         )
                                     })
                                 }
@@ -113,13 +121,13 @@ function Signup() {
 
                 </div>
 
-                <div className="email-input">
+                <div className="input-box">
 
-                    <div className="form-label">
+                    <div className="input-label">
                         <label htmlFor="email">Email: </label>
                     </div>
 
-                    <div className="email-field">
+                    <div className="input-field">
                         <input 
                             id="email"
                             onChange={(e) => setEmail(e.target.value)}
@@ -137,7 +145,7 @@ function Signup() {
                             touchedEmail
                             && !focusEmail
                             && (errors.email.length > 0)
-                            && <FontAwesomeIcon icon={faCircleExclamation}/>
+                            && <FontAwesomeIcon className="error-icon" icon={faCircleExclamation}/>
                         }
                     </div>
 
@@ -151,7 +159,12 @@ function Signup() {
                                 {
                                     errors.email.map((error, index) => {
                                         return (
-                                            <li key={'email-error-' + index}>{error}</li>
+                                            <li key={'email-error-' + index}>
+                                                <div className="error-list-item">
+                                                    <FontAwesomeIcon className="error-x-icon" icon={faXmark} />
+                                                    <p>{error}</p>
+                                                </div>
+                                            </li>
                                         )
                                     })
                                 }
@@ -161,13 +174,13 @@ function Signup() {
 
                 </div>
 
-                <div className="password-input">
+                <div className="input-box">
 
-                    <div className="form-label">
+                    <div className="input-label">
                         <label htmlFor="password">Password: </label>
                     </div>
 
-                    <div className="password-field">
+                    <div className="input-field">
                         <input 
                             id="password"
                             onChange={(e) => setPassword(e.target.value)}
@@ -185,7 +198,7 @@ function Signup() {
                             touchedPassword
                             && !focusPassword
                             && (errors.password.length > 0)
-                            && <FontAwesomeIcon icon={faCircleExclamation}/>
+                            && <FontAwesomeIcon className="error-icon" icon={faCircleExclamation}/>
                         }
                     </div>
 
@@ -199,23 +212,27 @@ function Signup() {
                                 {
                                     errors.password.map((error, index) => {
                                         return (
-                                            <li key={'password-error-' + index}>{error}</li>
+                                            <li key={'password-error-' + index}>
+                                                <div className="error-list-item">
+                                                    <FontAwesomeIcon className="error-x-icon" icon={faXmark} />
+                                                    <p>{error}</p>
+                                                </div>
+                                            </li>
                                         )
                                     })
                                 }
                             </ul>
                         </div>
                      }  
-
                 </div>
 
-                <div className="re-password-input">
+                <div className="input-box">
 
-                    <div className="form-label">
+                    <div className="input-label">
                         <label htmlFor="re-password">Confirm Password:</label>
                     </div>
 
-                    <div className="re-password-field">
+                    <div className="input-field">
                         <input 
                             id="re-password"
                             onChange={(e) => setRePassword(e.target.value)}
@@ -233,7 +250,7 @@ function Signup() {
                             touchedRePassword
                             && !focusRePassword
                             && (errors.rePassword.length > 0)
-                            && <FontAwesomeIcon icon={faCircleExclamation}/>
+                            && <FontAwesomeIcon className="error-icon" icon={faCircleExclamation}/>
                         }
                     </div>
 
@@ -247,7 +264,12 @@ function Signup() {
                                 {
                                     errors.rePassword.map((error, index) => {
                                         return (
-                                            <li key={'rePassword-error-' + index}>{error}</li>
+                                            <li key={'confirm-password-error-' + index}>
+                                                <div className="error-list-item">
+                                                    <FontAwesomeIcon className="error-x-icon" icon={faXmark} />
+                                                    <p>{error}</p>
+                                                </div>
+                                            </li>
                                         )
                                     })
                                 }
@@ -256,14 +278,15 @@ function Signup() {
                      }  
 
                 </div>
-
-                <button disabled={submitting}>Submit{submitting && '...'}</button>
-
+                <div className="form-button">
+                    <button disabled={submitting}>Submit{submitting && '...'}</button>
+                </div>
             </form>
 
-            <div className="signup-footer">
-                <p>Already have an Account? <Link to='/login'>Login</Link> here.</p>
+            <div className="auth-page-footer">
+                <p>Already have an Account? <Link to='/login'>Login <FontAwesomeIcon icon={faRightToBracket} /></Link> .</p>
             </div>
+
         </div>
     )
 }

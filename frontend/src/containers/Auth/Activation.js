@@ -13,7 +13,7 @@ function Activation() {
     }
 
     return (
-        <div className="activation-page">
+        <div className="activation-page page-middle">
             <h3>Click to Activate your Account!</h3>
             <button onClick={handeClick}>Activate</button>
         </div>
