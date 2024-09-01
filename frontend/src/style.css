@@ -179,10 +179,13 @@ input {
 .input-field {
     display: flex;
     align-items: center;
+    gap: 1rem;
     border: 1px solid #0a122a;
     border-radius: 5px;
     background-color: rgb(224, 220, 220);
     padding: 0 5px;
+
+    flex-grow: 1;
 }
 
 .error-icon {
@@ -211,6 +214,27 @@ input {
     color: red;
 }
 
+.input-password-field {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.show-password-icon {
+    font-size: 1.3rem;
+}
+
+.show-password-box {
+    background-color: rgb(224, 220, 220);
+    height: 2.2rem;
+    display: flex;
+    align-items: center;
+    padding: 0 0.3rem;
+    border: 1px solid #0a122a;
+    border-radius: 5px;
+}
+
 .form-button {
     display: flex;
     justify-content: center;
@@ -222,7 +246,7 @@ input {
     padding:0.4rem 0.8rem;
     border-radius: 10px;
     border: 1px solid #0a122a;
-    color: #0a122a;
+    color: hsl(225, 62%, 10%);
 }
 
 .auth-page-footer {

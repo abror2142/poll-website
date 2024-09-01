@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleExclamation, faPenToSquare, faRightToBracket, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faCircleExclamation, faPenToSquare, faRightToBracket, faXmark, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 import validateForm from "../../utils/validateForm";
 import { signup } from "../../utils/AuthAPI";
@@ -33,6 +33,7 @@ function Signup() {
 
     const [errors, setErrors] = useState({})
     const [submitting, setSubmitting] = useState(false)
+    const [showPassword, setShowPassword] = useState(false)
 
 
     useEffect(()=> {
@@ -180,9 +181,11 @@ function Signup() {
                         <label htmlFor="password">Password: </label>
                     </div>
 
-                    <div className="input-field">
+                    <div className="input-password-field">
+                        <div className="input-field">
                         <input 
                             id="password"
+                            type={showPassword ? "text" : "password"}
                             onChange={(e) => setPassword(e.target.value)}
                             onFocus={() => {
                                 setFocusPassword(true)
@@ -200,6 +203,15 @@ function Signup() {
                             && (errors.password.length > 0)
                             && <FontAwesomeIcon className="error-icon" icon={faCircleExclamation}/>
                         }
+                        </div>
+                        <div className="show-password-box">
+                            {
+                                showPassword
+                                ? <FontAwesomeIcon className="show-password-icon" icon={faEyeSlash} onClick={() => setShowPassword(false)}/>
+                                : <FontAwesomeIcon className="show-password-icon" icon={faEye} onClick={() => setShowPassword(true)}/>
+                            }
+                        </div>
+                        
                     </div>
 
                     {
@@ -232,27 +244,39 @@ function Signup() {
                         <label htmlFor="re-password">Confirm Password:</label>
                     </div>
 
-                    <div className="input-field">
-                        <input 
-                            id="re-password"
-                            onChange={(e) => setRePassword(e.target.value)}
-                            onFocus={() => {
-                                setFocusRePassword(true)
-                                setTouchedRePassword(true)
-                            }}
-                            onBlur={() => {
-                                setFocusRePassword(false)
-                                setFirstTouchRePassword(true)
-                            }}  
-                        />
-
-                        {
-                            touchedRePassword
-                            && !focusRePassword
-                            && (errors.rePassword.length > 0)
-                            && <FontAwesomeIcon className="error-icon" icon={faCircleExclamation}/>
-                        }
+                    <div className="input-password-field">
+                        <div className="input-field">
+                            <input 
+                                id="re-password"
+                                type={showPassword ? "text" : "password"}
+                                onChange={(e) => setRePassword(e.target.value)}
+                                onFocus={() => {
+                                    setFocusRePassword(true)
+                                    setTouchedRePassword(true)
+                                }}
+                                onBlur={() => {
+                                    setFocusRePassword(false)
+                                    setFirstTouchRePassword(true)
+                                }}  
+                            />
+                            
+                            {
+                                touchedRePassword
+                                && !focusRePassword
+                                && (errors.rePassword.length > 0)
+                                && <FontAwesomeIcon className="error-icon" icon={faCircleExclamation}/>
+                            }
+                        </div>
+                        <div className="show-password-box">
+                            {
+                                showPassword
+                                ? <FontAwesomeIcon className="show-password-icon" icon={faEyeSlash} onClick={() => setShowPassword(false)}/>
+                                : <FontAwesomeIcon className="show-password-icon" icon={faEye} onClick={() => setShowPassword(true)}/>
+                            }
+                        </div>
                     </div>
+                    
+
 
                     {
                         touchedRePassword
