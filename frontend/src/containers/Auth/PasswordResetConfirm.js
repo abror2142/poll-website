@@ -3,10 +3,10 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
+import { faCircleExclamation, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 import validateForm from "../../utils/validateForm";
-
+import { resetPasswordConfirm } from "../../utils/AuthAPI";
 
 function PasswordResetConfirm() {
 
@@ -21,8 +21,9 @@ function PasswordResetConfirm() {
     const [firstTouchRePassword, setFirstTouchRePassword] = useState(false)
 
     const [errors, setErrors] = useState({})
-
+    const [showPassword, setShowPassword] = useState(false)
     const {uid, token} = useParams()
+    const [submitting, setSubmitting] = useState(false)
 
     useEffect(()=> {
         setErrors(validateForm(null, null, password, rePassword))
@@ -31,33 +32,45 @@ function PasswordResetConfirm() {
     async function handleSubmit(e) {
         e.preventDefault()
 
-        const data = {
-            "uid": uid,
-            "token": token,
-            "new_password": password,
-            "re_new_password": rePassword,
+        if(uid && token){
+            setSubmitting(true)
+            const data = {
+                "uid": uid,
+                "token": token,
+                "new_password": password,
+                "re_new_password": rePassword,
+            }
+            try {
+            const response = await resetPasswordConfirm(data)
+            console.log(response)
+            } catch (error) {
+                console.log(error)
+            } finally{
+                setSubmitting(false)
+            }
         }
 
-        // send data
     }
 
     return (
-        <div className="pass-res-confirm-page page-middle">
-            <div className="pass-res-confirm-header">
+        <div className="auth-page">
+            <div className="auth-page-header">
                 <h2>Set New Password</h2>
             </div>
 
-            <form onSubmit={handleSubmit} className="form pass-res-confirm-form"> 
+            <form onSubmit={handleSubmit} className="form auth-page-form"> 
 
-                <div className="password-input">
+                <div className="input-box">
 
-                    <div className="form-label">
-                        <label htmlFor="password">Password: </label>
+                    <div className="input-label">
+                        <label htmlFor="password">New Password: </label>
                     </div>
 
-                    <div className="password-field">
+                    <div className="input-password-field">
+                        <div className="input-field">
                         <input 
                             id="password"
+                            type={showPassword ? "text" : "password"}
                             onChange={(e) => setPassword(e.target.value)}
                             onFocus={() => {
                                 setFocusPassword(true)
@@ -73,69 +86,97 @@ function PasswordResetConfirm() {
                             touchedPassword
                             && !focusPassword
                             && errors.password
-                            && <FontAwesomeIcon icon={faCircleExclamation}/>
+                            && <FontAwesomeIcon className="error-icon" icon={faCircleExclamation}/>
                         }
+                        </div>
+            
+                        <div className="show-password-box">
+                            {
+                                showPassword
+                                ? <FontAwesomeIcon className="show-password-icon" icon={faEyeSlash} onClick={() => setShowPassword(false)}/>
+                                : <FontAwesomeIcon className="show-password-icon" icon={faEye} onClick={() => setShowPassword(true)}/>
+                            }
+                        </div>
                     </div>
 
                     {
                         touchedPassword
                         && focusPassword
                         && firstTouchPassword  
-                        && errors.password
+                        && (errors.password.length > 0)
                         && <div className="error-box">
-                            <ul>
-                                {
-                                    errors.password.map((error, index) => {
-                                        return (
-                                            <li key={'password-error-' + index}>{error}</li>
-                                        )
-                                    })
-                                }
-                            </ul>
-                        </div>
+                                <ul>
+                                    {
+                                        errors.password.map((error, index) => {
+                                            return (
+                                                <li key={'password-error-' + index}>
+                                                    <div className="error-list-item">
+                                                        <FontAwesomeIcon className="error-x-icon" icon={faXmark} />
+                                                        <p>{error}</p>
+                                                    </div>
+                                                </li>
+                                            )
+                                        })
+                                    }
+                                </ul>
+                            </div>
                      }  
 
                 </div>
 
-                <div className="re-password-input">
+                <div className="input-box">
 
-                    <div className="form-label">
-                        <label htmlFor="re-password">Confirm Password:</label>
+                    <div className="input-label">
+                        <label htmlFor="re-password">Confirm New Password:</label>
                     </div>
 
-                    <div className="re-password-field">
-                        <input 
-                            id="re-password"
-                            onChange={(e) => setRePassword(e.target.value)}
-                            onFocus={() => {
-                                setFocusRePassword(true)
-                                setTouchedRePassword(true)
-                            }}
-                            onBlur={() => {
-                                setFocusRePassword(false)
-                                setFirstTouchRePassword(true)
-                            }}  
-                        />
-
-                        {
-                            touchedRePassword
-                            && !focusRePassword
-                            && errors.rePassword
-                            && <FontAwesomeIcon icon={faCircleExclamation}/>
-                        }
+                    <div className="input-password-field">
+                        <div className="input-field">
+                            <input 
+                                id="re-password"
+                                type={showPassword ? "text" : "password"}
+                                onChange={(e) => setRePassword(e.target.value)}
+                                onFocus={() => {
+                                    setFocusRePassword(true)
+                                    setTouchedRePassword(true)
+                                }}
+                                onBlur={() => {
+                                    setFocusRePassword(false)
+                                    setFirstTouchRePassword(true)
+                                }}  
+                            />
+                            {
+                                touchedRePassword
+                                && !focusRePassword
+                                && errors.rePassword
+                                && <FontAwesomeIcon className="error-icon" icon={faCircleExclamation}/>
+                            }
+                        </div>
+                        <div className="show-password-box">
+                            {
+                                showPassword
+                                ? <FontAwesomeIcon className="show-password-icon" icon={faEyeSlash} onClick={() => setShowPassword(false)}/>
+                                : <FontAwesomeIcon className="show-password-icon" icon={faEye} onClick={() => setShowPassword(true)}/>
+                            }
+                        </div>
                     </div>
 
                     {
                         touchedRePassword
                         && focusRePassword
                         && firstTouchRePassword  
-                        && errors.rePassword
+                        && (errors.rePassword.length > 0)
                         && <div className="error-box">
                             <ul>
                                 {
-                                    errors.rePassword.map((error, index) => {
+                                    errors.password.map((error, index) => {
                                         return (
-                                            <li key={'rePassword-error-' + index}>{error}</li>
+                                            <li key={'password-error-' + index}>
+                                                <div className="error-list-item">
+                                                    <FontAwesomeIcon className="error-x-icon" icon={faXmark} />
+                                                    <p>{error}</p>
+                                                </div>
+                                            </li>
                                         )
                                     })
                                 }
@@ -145,8 +186,9 @@ function PasswordResetConfirm() {
 
                 </div>
 
-                <button>Submit</button>
-
+                <div className="form-button">
+                    <button disabled={submitting}>Submit{submitting && "ting..."}</button>
+                </div>
             </form>
 
         </div>

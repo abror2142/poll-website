@@ -34,7 +34,7 @@ const routes = createRoutesFromElements(
             element={<PasswordReset />}
         />
         <Route 
-            path="password-reset-confirm"
+            path="password-reset-confirm/:uid/:token"
             element={<PasswordResetConfirm />}
         />
     </Route>
