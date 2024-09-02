@@ -26,7 +26,7 @@ const routes = createRoutesFromElements(
             element={<Login />}
         />
         <Route 
-            path="activation"
+            path="activation/:uid/:token"
             element={<Activation />}
         />
         <Route 
