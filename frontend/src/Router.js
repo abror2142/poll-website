@@ -8,7 +8,7 @@ import Login from "./containers/Auth/Login";
 import Activation from "./containers/Auth/Activation";
 import PasswordReset from "./containers/Auth/PasswordReset";
 import PasswordResetConfirm from "./containers/Auth/PasswordResetConfirm";
-
+import ActivationNotification from "./containers/Auth/ActivationNotification";
 
 const routes = createRoutesFromElements(
     <Route path="/" element={<Layout />}> 
@@ -36,6 +36,10 @@ const routes = createRoutesFromElements(
         <Route 
             path="password-reset-confirm/:uid/:token"
             element={<PasswordResetConfirm />}
+        />
+        <Route 
+            path="activation-notification"
+            element={<ActivationNotification />}
         />
     </Route>
 )

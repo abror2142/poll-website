@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleExclamation, faPenToSquare, faRightToBracket, faXmark, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
@@ -34,7 +34,7 @@ function Signup() {
     const [errors, setErrors] = useState({})
     const [submitting, setSubmitting] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
-
+    const navigate = useNavigate()
 
     useEffect(()=> {
         setErrors(validateForm(username, email, password, rePassword))
@@ -52,9 +52,15 @@ function Signup() {
             "password": password,
             "re_password": rePassword
         }
-        const response = await signup(data)
-        console.log(response)
-        setSubmitting(false)
+        try {
+            const response = await signup(data)
+            console.log(response)
+            navigate('/activation-notification', {state: {email: email}})
+        } catch (error) {
+            console.log("In Signup", error)
+        }finally{
+            setSubmitting(false)
+        }
     }
     
     return (

@@ -38,20 +38,30 @@ async function request(method, path, data, headers) {
     }
 
     const resp = await fetch(path, options)
-    const msg = await resp.json()
 
-    if (msg.status === 410) {
-        tokenStorage.removeItem('sessionToken')
-      }
-    if (msg.meta?.session_token) {
-        tokenStorage.setItem('sessionToken', msg.meta.session_token)
-      }
-    if ([401, 410].includes(msg.status) || (msg.status === 200 && msg.meta?.is_authenticated)) {
-        const event = new CustomEvent('allauth.auth.change', { detail: msg })
-        document.dispatchEvent(event)
+    if(resp.ok){
+        if(resp.status === 204){
+            return null
+        } else {
+            const msg = await resp.json()
+            if (msg.status === 410) {
+                tokenStorage.removeItem('sessionToken')
+            }
+            if (msg.meta?.session_token) {
+                tokenStorage.setItem('sessionToken', msg.meta.session_token)
+            }
+            if ([401, 410].includes(msg.status) || (msg.status === 200 && msg.meta?.is_authenticated)) {
+                const event = new CustomEvent('allauth.auth.change', { detail: msg })
+                document.dispatchEvent(event)
+            }
+
+            return msg
+        } 
+    } else {
+        throw new Error("Invalid Response")
     }
-    return msg
-} 
+}
+
 
 export async function signup(data) {
     return await request('POST', URLs.SIGNUP, data)
@@ -62,7 +72,7 @@ export async function activation(data) {
 }
 
 export async function resendActivation(data) {
-    return await request('POST', URLs.SIGNUP, data)
+    return await request('POST', URLs.RESEND_ACTIVATE, data)
 }
 
 export async function getUser() {

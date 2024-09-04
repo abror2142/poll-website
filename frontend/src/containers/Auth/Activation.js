@@ -4,8 +4,8 @@ import { activation } from "../../utils/AuthAPI";
 
 function Activation() {
 
+    const {uid, token} = useParams()
     async function handeClick(){
-        const {uid, token} = useParams()
         if(uid && token) {
             const data = {
                 "uid": uid,
