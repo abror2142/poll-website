@@ -54,10 +54,13 @@ function Signup() {
         }
         try {
             const response = await signup(data)
-            console.log(response)
-            navigate('/activation-notification', {state: {email: email}})
+            if(response.status === 201) {
+                navigate('/activation-notification', {state: {email: email}})
+            } else if(response.status === 400) {
+                const msg = await response.json()
+            }   
         } catch (error) {
-            console.log("In Signup", error)
+            console.log(error)
         }finally{
             setSubmitting(false)
         }
