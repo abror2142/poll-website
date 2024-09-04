@@ -38,28 +38,7 @@ async function request(method, path, data, headers) {
     }
 
     const resp = await fetch(path, options)
-
-    if(resp.ok){
-        if(resp.status === 204){
-            return null
-        } else {
-            const msg = await resp.json()
-            if (msg.status === 410) {
-                tokenStorage.removeItem('sessionToken')
-            }
-            if (msg.meta?.session_token) {
-                tokenStorage.setItem('sessionToken', msg.meta.session_token)
-            }
-            if ([401, 410].includes(msg.status) || (msg.status === 200 && msg.meta?.is_authenticated)) {
-                const event = new CustomEvent('allauth.auth.change', { detail: msg })
-                document.dispatchEvent(event)
-            }
-
-            return msg
-        } 
-    } else {
-        throw new Error("Invalid Response")
-    }
+    return resp
 }
 
 
@@ -120,7 +99,18 @@ export async function resetPasswordConfirm(data) {
 }
 
 export async function createJWT(data) {
-    return await request('POST', URLs.JWT_CREATE, data)
+    // Setting, or removing token from session storage 
+    // based on the result of the request
+    const response = await request('POST', URLs.JWT_CREATE, data)
+    if(response.status === 200) {
+        const msg = await response.json()
+        tokenStorage.setItem("access", msg.access)
+        tokenStorage.setItem("refresh", msg.refresh)
+    } else if(response.status === 401) {
+        tokenStorage.removeItem("access")
+        tokenStorage.removeItem("refresh")
+    }
+    return response
 }
 
 export async function verifyJWT(data) {

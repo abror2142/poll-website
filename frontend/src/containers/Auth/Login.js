@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleExclamation, faLock, faXmark, faEye, faEyeSlash, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
@@ -25,6 +25,8 @@ function Login() {
     const [submitting, setSubmitting] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
 
+    const navigate = useNavigate()
+
     useEffect(()=> {
         setErrors(validateForm(username, null, password, null))
     }, [username, password])
@@ -32,8 +34,10 @@ function Login() {
 
     async function handleSubmit(e) {
         e.preventDefault()
-        if(errors.username || errors.password){
+
+        if(errors.username.length > 0 || errors.password.length > 0){
             setShowErrors(true)
+            console.log(errors)
         } else {
             setSubmitting(true)
 
@@ -43,8 +47,12 @@ function Login() {
             }
 
             const response = await createJWT(data)
-            console.log(response)
 
+            if(response.status === 200) {
+                navigate("/") // will fix soon after auth pages
+            } else {
+                console.log("Not Authenticated!")
+            }
             setSubmitting(false)
         }
     }
@@ -180,8 +188,9 @@ function Login() {
                      }  
 
                 </div>
+
                 <div className="form-button">
-                    <button disabled={submitting}>Login{submitting && '...'}</button>
+                    <button disabled={submitting} type="submit">Login{submitting && '...'}</button>
                 </div>
 
             </form>
