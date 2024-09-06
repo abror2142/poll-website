@@ -15,9 +15,6 @@ from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-DOMAIN = config('DOMAIN')
-SITE_NAME = config('SITE_NAME')
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -48,32 +45,6 @@ INSTALLED_APPS = [
     'accounts',
     'poll',
 ]
-
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
-]
-
-
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication', )
-}
-
-SIMPLE_JWT = {
-    'AUTH_HEADER_TYPES': ('JWT', )
-}
-
-DJOSER = {
-    'SEND_CONFIRMATION_EMAIL': True,
-    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
-    'USERNAME_CHANGED_EMAIL_CONFIRMATION': True,
-    'USER_CREATE_PASSWORD_RETYPE': True,
-    'PASSWORD_RESET_CONFIRM_RETYPE': True,
-    'PASSWORD_RESET_CONFIRM_URL': 'password-reset-confirm/{uid}/{token}',
-    'USERNAME_RESET_CONFIRM_URL': 'username=reset-confirm/{uid}/{token}',
-    'ACTIVATION_URL': 'activation/{uid}/{token}',
-    'SEND_ACTIVATION_EMAIL': True,
-    'SERIALIZERS': {},
-}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -121,16 +92,6 @@ DATABASES = {
     }
 }
 
-
-# Email Setup
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
@@ -172,3 +133,57 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Custom User Model
+
+AUTH_USER_MODEL = 'accounts.User'
+
+# Set domain name
+
+DOMAIN = config('DOMAIN')
+
+# Setting Site Name
+
+SITE_NAME = config('SITE_NAME')
+
+# Email Setup
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+
+# Allowed origins list
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+]
+
+# Restframework settings
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication', )
+}
+
+# JWT settings
+
+SIMPLE_JWT = {
+    'AUTH_HEADER_TYPES': ('JWT', )
+}
+
+# Djoser Settings
+
+DJOSER = {
+    'SEND_CONFIRMATION_EMAIL': True,
+    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
+    'USERNAME_CHANGED_EMAIL_CONFIRMATION': True,
+    'USER_CREATE_PASSWORD_RETYPE': True,
+    'PASSWORD_RESET_CONFIRM_RETYPE': True,
+    'PASSWORD_RESET_CONFIRM_URL': 'password-reset-confirm/{uid}/{token}',
+    'USERNAME_RESET_CONFIRM_URL': 'username=reset-confirm/{uid}/{token}',
+    'ACTIVATION_URL': 'activation/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
+    'SERIALIZERS': {},
+}

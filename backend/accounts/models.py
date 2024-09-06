@@ -1,11 +1,20 @@
 from django.db import models
-from django.contrib.auth.models import User
-
+from django.contrib.auth.models import AbstractUser
 
 """
     In Account's model stores information about
     users including their address, and personal info.
 """
+
+# Custom user model
+
+class User(AbstractUser):
+    """
+        Using Custom User Model is recommended by Django.
+        By doing this, we will be able to modify user model in the future.
+    """
+    pass
+
 
 class Country(models.Model):
     """
