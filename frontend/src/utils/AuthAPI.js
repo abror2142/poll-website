@@ -15,6 +15,9 @@ export const URLs = {
     JWT_CREATE: BASE_URL + 'jwt/create/',
     JWT_REFRESH: BASE_URL + 'jwt/refresh/',
     JWT_VERIFY: BASE_URL + 'jwt/verify/',
+
+    // Social Registration Endpoints
+    GOOGLE_AUTHENTICATION: 'Comes as secret!'
 }
 
 const ACCEPT_JSON = {

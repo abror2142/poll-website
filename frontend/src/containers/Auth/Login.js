@@ -1,12 +1,13 @@
-import React from "react";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleExclamation, faLock, faXmark, faEye, faEyeSlash, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import {faFacebook, faGithub, faGoogle, faTwitter} from "@fortawesome/free-brands-svg-icons";
 
 import validateForm from "../../utils/validateForm";
-import { createJWT } from "../../utils/AuthAPI";
+import { createJWT, URLs } from "../../utils/AuthAPI";
+
 
 function Login() {
 
@@ -26,6 +27,8 @@ function Login() {
     const [showPassword, setShowPassword] = useState(false)
 
     const navigate = useNavigate()
+
+    console.log('-----------------------', URLs.GOOGLE_AUTHENTICATION)
 
     useEffect(()=> {
         setErrors(validateForm(username, null, password, null))
@@ -198,6 +201,19 @@ function Login() {
             <div className="auth-page-footer">
                 <p>Don't have an Account? <Link to='/signup'>Signup <FontAwesomeIcon icon={faPenToSquare} /></Link> here.</p>
                 <p>Forget your Password? <Link to='/password-reset'>Reset</Link> here.</p>
+                <hr />
+                <p>Or</p>
+                <p>Login using:</p>
+                <div className="social-btns">
+                    <Link to={URLs.GOOGLE_AUTHENTICATION}>
+                        <FontAwesomeIcon 
+                            icon={faGoogle}
+                        />
+                    </Link>
+                    <FontAwesomeIcon icon={faFacebook} />
+                    <FontAwesomeIcon icon={faGithub} />
+                    <FontAwesomeIcon icon={faTwitter} />
+                </div>
             </div>
         </div>
     )

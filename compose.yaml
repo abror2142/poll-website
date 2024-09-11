@@ -38,9 +38,13 @@ services:
     restart: always
     ports:
       - '3000:3000'
+    environment:
+      - REACT_APP_GOOGLE_CLIENT_ID=${REACT_APP_GOOGLE_CLIENT_ID}
+      - REACT_APP_GOOGLE_CALLBACK_URL=${REACT_APP_GOOGLE_CALLBACK_URL}
     command: npm start
     depends_on:
       - 'backend'
+    
 
 volumes:
   data:

@@ -20,7 +20,4 @@ def google_login_callback(request: Request)-> Response:
     code = request.query_params['code']
     response = requests.post('http://127.0.0.1:8000/accounts/google/login/', json={"code": code})
     json_response = response.json()
-    print('-----------------')
-    print(json_response)
-    print('-----------------')
     return Response('')
